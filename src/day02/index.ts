@@ -23,9 +23,23 @@ interface ComplexPosition extends Position {
   aim: number;
 }
 
+function instanceOfComplexPosition(
+  position: Position | ComplexPosition,
+): position is ComplexPosition {
+  return "aim" in position;
+}
+
 const parseInput = (rawInput: string) => rawInput;
 
-const calculateNewPosition1 = (position: Position, movement: Movement) => {
+const formatInput = (input: string) => {
+  const data: [Direction, number][] = input.split("\n").map((line) => {
+    const splitLine = line.split(" ");
+    return [splitLine[0] as Direction, parseInt(splitLine[1])];
+  });
+  return data;
+};
+
+const calculatePosition = (position: Position, movement: Movement) => {
   const { distance, direction } = movement;
   const { horizontal, depth } = position;
 
@@ -46,7 +60,7 @@ const calculateNewPosition1 = (position: Position, movement: Movement) => {
   return newPosition;
 };
 
-const calculateNewPosition2 = (
+const calculateComplexPosition = (
   position: ComplexPosition,
   movement: Movement,
 ) => {
@@ -70,12 +84,20 @@ const calculateNewPosition2 = (
   };
 };
 
-const formatInput = (input: string) => {
-  const data: [Direction, number][] = input.split("\n").map((line) => {
-    const splitLine = line.split(" ");
-    return [splitLine[0] as Direction, parseInt(splitLine[1])];
-  });
-  return data;
+const getFinalResult = (
+  startingPosition: Position | ComplexPosition,
+  data: [Direction, number][],
+) => {
+  const finalPosition = data.reduce((acc, next) => {
+    const [direction, distance] = next;
+
+    if (instanceOfComplexPosition(acc)) {
+      return calculateComplexPosition(acc, { direction, distance });
+    } else {
+      return calculatePosition(acc, { direction, distance });
+    }
+  }, startingPosition);
+  return finalPosition.horizontal * finalPosition.depth;
 };
 
 const part1 = (rawInput: string) => {
@@ -87,15 +109,7 @@ const part1 = (rawInput: string) => {
     depth: 0,
   };
 
-  const finalPosition = formattedInput.reduce((acc, next) => {
-    const [direction, distance] = next;
-
-    const newPosition = calculateNewPosition1(acc, { direction, distance });
-
-    return (acc = newPosition);
-  }, startingPosition);
-
-  const res = finalPosition.horizontal * finalPosition.depth;
+  const res = getFinalResult(startingPosition, formattedInput);
   return res;
 };
 
@@ -109,15 +123,8 @@ const part2 = (rawInput: string) => {
     aim: 0,
   };
 
-  const finalPosition = formattedInput.reduce((acc, next) => {
-    const [direction, distance] = next;
+  const res = getFinalResult(startingPosition, formattedInput);
 
-    const newPosition = calculateNewPosition2(acc, { direction, distance });
-
-    return (acc = newPosition);
-  }, startingPosition);
-
-  const res = finalPosition.horizontal * finalPosition.depth;
   return res;
 };
 
