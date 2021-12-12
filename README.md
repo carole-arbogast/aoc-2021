@@ -7,13 +7,17 @@
 
 # 🎄 Advent of Code 2021 🎄
 
+## General Information
+
+In this repository you'll find some of my solutions for the [Advent of Code 2021](https://adventofcode.com/). They are written in Typescript. I used the [AoC Runner](https://github.com/caderek/aocrunner) as a template.
+
 ## Solutions
 
 <!--SOLUTIONS-->
 
-![Day](https://badgen.net/badge/01/%E2%98%86%E2%98%86/gray)
-![Day](https://badgen.net/badge/02/%E2%98%86%E2%98%86/gray)
-![Day](https://badgen.net/badge/03/%E2%98%86%E2%98%86/gray)
+[![Day](https://badgen.net/badge/04/%E2%98%85%E2%98%85/green)](src/day01)
+[![Day](https://badgen.net/badge/04/%E2%98%85%E2%98%85/green)](src/day02)
+[![Day](https://badgen.net/badge/04/%E2%98%85%E2%98%85/green)](src/day03)
 [![Day](https://badgen.net/badge/04/%E2%98%85%E2%98%85/green)](src/day04)
 ![Day](https://badgen.net/badge/05/%E2%98%86%E2%98%86/gray)
 [![Day](https://badgen.net/badge/06/%E2%98%85%E2%98%85/green)](src/day06)
